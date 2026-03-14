@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Union WL - Staff</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        /* ===== NAVBAR ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: #000;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        .logo {
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 900;
+            transition: opacity 0.3s;
+            background: none;
+            border: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo:hover {
+            opacity: 0.8;
+        }
+        .logo-violet {
+            color: #a855f7;
+        }
+        .menu-desktop {
+            display: none;
+            gap: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .menu-desktop {
+                display: flex;
+            }
+        }
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 0.5rem;
+            color: #9ca3af;
+        }
+        .nav-btn:hover {
+            color: #a855f7;
+        }
+        .nav-btn.active {
+            background-color: #a855f7;
+            color: #fff;
+        }
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+        .mobile-menu {
+            display: none;
+            border-top: 2px solid rgba(168, 85, 247, 0.3);
+            background-color: #000;
+        }
+        .mobile-menu.show {
+            display: block;
+        }
+        .mobile-menu .nav-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 0;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* ===== HOME PAGE ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #0f172a via #1e1b4b to #000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #000 via rgba(168, 85, 247, 0.1) to #000);
+            opacity: 0.2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 56rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em;
+        }
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 5rem;
+            }
+        }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        .hero-desc {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            max-width: 42rem;
+            margin: 0 auto 3rem;
+            line-height: 1.625;
+        }
+        .hero-meta {
+            color: #c084fc;
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: #a855f7;
+            color: #fff;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.125rem;
+        }
+        .btn:hover {
+            background-color: #9333ea;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 6rem 1rem;
+        }
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .section-dark {
+            background-color: #000;
+        }
+        .section-darker {
+            background-color: #0f172a;
+        }
+        .section h2 {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: #a855f7;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-desc {
+            font-size: 1.125rem;
+            color: #9ca3af;
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto 3rem;
+        }
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .vision-item {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(30, 27, 75, 0.5);
+            transition: all 0.3s;
+        }
+        .vision-item:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+        .vision-emoji {
+            font-size: 2.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .vision-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .vision-text {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .two-col-text h2 {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        .two-col-text p {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            line-height: 1.625;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== BANNER SECTION ===== */
+        .banner-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            margin-bottom: 2rem;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+        }
+        .banner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .banner-container:hover .banner-image {
+            transform: scale(1.05);
+        }
+        .banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .banner-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .banner-subtitle {
+            font-size: 1.125rem;
+            color: #c084fc;
+        }
+
+        /* ===== REGLEMENT PAGE ===== */
+        .reglement-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #a855f7;
+            margin-bottom: 1rem;
+        }
+        .reglement-header p {
+            font-size: 1.125rem;
+            color: #9ca3af;
+            margin-bottom: 1rem;
+        }
+        .danger-text {
+            color: #ef4444;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+        .reglement-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .reglement-box {
+            background: rgba(30, 27, 75, 0.5);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        .reglement-box:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+        .reglement-box h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #c084fc;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .reglement-box ul {
+            list-style: none;
+        }
+        .reglement-box li {
+            color: #d1d5db;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .reglement-box li::before {
+            content: '✓';
+            color: #c084fc;
+            font-weight: 700;
+            margin-right: 1rem;
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+        .danger-box {
+            background: rgba(127, 29, 29, 0.2);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+        .danger-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 1.5rem;
+        }
+        .sanctions-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .sanction-item {
+            color: #d1d5db;
+        }
+        .sanction-label {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        /* ===== STAFF PAGE ===== */
+        .staff-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #a855f7;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .category {
+            margin-bottom: 4rem;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .category-line {
+            flex: 1;
+            height: 4px;
+        }
+        .category-title {
+            font-size: 1.875rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+        .line-violet { background: linear-gradient(to right, #a855f7, transparent); }
+        .line-violet-rev { background: linear-gradient(to left, #a855f7, transparent); }
+        .line-fuchsia { background: linear-gradient(to right, #d946ef, transparent); }
+        .line-fuchsia-rev { background: linear-gradient(to left, #d946ef, transparent); }
+        .staff-items {
+            display: grid;
+            gap: 1rem;
+        }
+        .staff-card {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid;
+            animation: slideDown 0.8s ease-out backwards;
+        }
+        .staff-card:hover {
+            filter: brightness(1.1);
+        }
+        .staff-card-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+        .staff-emoji {
+            font-size: 2rem;
+        }
+        .staff-info h3 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 0.25rem;
+        }
+        .staff-rank {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #c084fc;
+        }
+        .staff-discord {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+        .staff-card-right {
+            text-align: right;
+            font-size: 0.875rem;
+            opacity: 0.8;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+        /* Card variants */
+        .direction {
+            background: linear-gradient(to right, rgba(88, 28, 135, 0.8), #000);
+            border-color: rgba(168, 85, 247, 0.7);
+        }
+        .leadership {
+            background: linear-gradient(to right, rgba(75, 0, 130, 0.6), #000);
+            border-color: rgba(217, 70, 239, 0.6);
+        }
+        .admin {
+            background: linear-gradient(to right, rgba(168, 85, 247, 0.5), #000);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+        .moderation {
+            background: linear-gradient(to right, rgba(6, 182, 212, 0.4), #000);
+            border-color: rgba(34, 211, 238, 0.5);
+        }
+        .support {
+            background: linear-gradient(to right, rgba(71, 85, 105, 0.4), #000);
+            border-color: rgba(100, 116, 139, 0.4);
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .info-box {
+            background: linear-gradient(to right, rgba(88, 28, 135, 0.2), rgba(75, 0, 130, 0.2));
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-top: 3rem;
+        }
+        .info-box h3 {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: #c084fc;
+            margin-bottom: 1rem;
+        }
+        .info-box p {
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .info-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+        .info-item-label {
+            color: #c084fc;
+            font-weight: 700;
+        }
+        .info-item-text {
+            color: #9ca3af;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #0f172a;
+            border-top: 2px solid rgba(168, 85, 247, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        footer p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR (sans les boutons admin) -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <button class="logo" onclick="changePage('home')">
+                <img src="https://i.postimg.cc/L55j1dvt/Sans-titre-1.png" alt="Logo" style="height: 45px; width: 45px; border-radius: 0.5rem;">
+                <span>UNION <span class="logo-violet">WL</span></span>
+            </button>
+
+            <div class="menu-desktop" id="menuDesktop">
+                <button class="nav-btn active" onclick="changePage('home')">ACCUEIL</button>
+                <button class="nav-btn" onclick="changePage('reglement')">RÈGLEMENT STAFF</button>
+                <button class="nav-btn" onclick="changePage('staff')">ÉQUIPE</button>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="nav-btn" onclick="changePage('home')">ACCUEIL</button>
+            <button class="nav-btn" onclick="changePage('reglement')">RÈGLEMENT STAFF</button>
+            <button class="nav-btn" onclick="changePage('staff')">ÉQUIPE</button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HOME PAGE -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>UNION <span class="logo-violet">WL</span></h1>
+                    <p class="hero-subtitle">L'équipe de Union Roleplay</p>
+                    <p class="hero-desc">Votre espace dédié à la gestion, au suivi et au bon fonctionnement de notre communauté RP.</p>
+                    <p class="hero-meta">Professionnalisme – Maturité – Immersion</p>
+                    <button class="btn" onclick="changePage('staff')">Voir l'équipe</button>
+                </div>
+            </div>
+
+            <section class="section section-dark">
+                <div class="section-container">
+                    <div class="banner-container">
+                        <img src="https://i.postimg.cc/52Z8sy22/Ajouter-un-titre-4.png" alt="Bannière Union WL" class="banner-image">
+                        <div class="banner-overlay">
+                            <h2 class="banner-title">Union WL Staff</h2>
+                            <p class="banner-subtitle">L'excellence du roleplay francophone</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section section-dark">
+                <div class="section-container">
+                    <h2>Notre Vision 🌟</h2>
+                    <p class="section-desc">Sur <strong>Union WL</strong>, nous imaginons un espace où chaque joueur vit une véritable histoire, guidée par la créativité, le respect et l'immersion totale. Notre ambition est de devenir la référence du RP francophone.</p>
+
+                    <div class="vision-grid">
+                        <div class="vision-item">
+                            <div class="vision-emoji">🎭</div>
+                            <div class="vision-title">Immersion</div>
+                            <div class="vision-text">Un univers cohérent</div>
+                        </div>
+                        <div class="vision-item">
+                            <div class="vision-emoji">🤝</div>
+                            <div class="vision-title">Respect</div>
+                            <div class="vision-text">Équitable et sain</div>
+                        </div>
+                        <div class="vision-item">
+                            <div class="vision-emoji">🚀</div>
+                            <div class="vision-title">Innovation</div>
+                            <div class="vision-text">Mécaniques riches</div>
+                        </div>
+                        <div class="vision-item">
+                            <div class="vision-emoji">🇫🇷</div>
+                            <div class="vision-title">Communauté</div>
+                            <div class="vision-text">Passionnés unis</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section section-darker">
+                <div class="section-container">
+                    <div class="two-col">
+                        <img src="https://i.postimg.cc/Z5n64gqM/logo-union-rp-wl-1.png" alt="Équipe Staff" style="width:100%; height:100%; object-fit:cover; border-radius:0.75rem;">
+                        <div class="two-col-text">
+                            <h2>Qui sommes nous ?</h2>
+                            <p>Le staff d'Union WL est avant tout une équipe de <strong>passionnés</strong> dédiée à offrir une expérience de jeu immersive, équitable et agréable à chaque joueur.</p>
+                            <p>Notre mission est de veiller au respect des règles, d'encadrer les scènes RP et de soutenir la communauté afin que chacun puisse vivre des histoires mémorables.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- REGLEMENT PAGE -->
+        <div id="reglement" class="page">
+            <section class="section section-dark">
+                <div class="section-container">
+                    <div class="reglement-header">
+                        <h1>RÈGLEMENT INTERNE STAFF</h1>
+                        <p>Version 1.0 - Document à lire obligatoirement</p>
+                        <p class="danger-text">⚠️ Leak = Demote + Ban définitif</p>
+                    </div>
+
+                    <div class="reglement-grid">
+                        <div class="reglement-box">
+                            <h2>1. LE RESPECT DU SERVEUR</h2>
+                            <ul>
+                                <li>Gardez votre sérieux et votre professionnalisme pour tous types de situations</li>
+                                <li>Vous êtes staff pour faire respecter les règles, pas pour en abuser ou montrer vos permissions</li>
+                                <li>Ne jamais communiquer in-game sur un report. Communication par message ou ticket Discord uniquement</li>
+                                <li>Pour les sanctions, faites confiance à votre jugement. En cas de doute, consultez l'équipe</li>
+                                <li>Représentez le lore et l'atmosphère du serveur</li>
+                            </ul>
+                        </div>
+
+                        <div class="reglement-box">
+                            <h2>2. TERMES RP ESSENTIELS</h2>
+                            <ul>
+                                <li><strong>RP:</strong> Role Play - Incarner un personnage à Los Santos</li>
+                                <li><strong>HRP:</strong> Hors Role Play - Actions du joueur hors du personnage</li>
+                                <li><strong>METAGAMING:</strong> Utiliser des infos obtenues hors RP - INTERDIT</li>
+                                <li><strong>FEAR RP:</strong> Jouer la peur dans les situations dangereuses - OBLIGATOIRE</li>
+                                <li><strong>PAIN RP:</strong> Simuler la douleur physique ou mentale - OBLIGATOIRE</li>
+                                <li><strong>MASS RP:</strong> Considérer la population de la ville et les PNJ</li>
+                                <li><strong>FREE KILL:</strong> Tuer sans raison valable - INTERDIT</li>
+                                <li><strong>CAR KILL:</strong> Écraser quelqu'un avec un véhicule - STRICTEMENT INTERDIT</li>
+                                <li><strong>WIN RP:</strong> Vouloir "gagner" à tout prix - CONDAMNABLE</li>
+                                <li><strong>LOSE RP:</strong> Admettre sa défaite et perdre</li>
+                            </ul>
+                        </div>
+
+                        <div class="reglement-box">
+                            <h2>3. CONFIDENTIALITÉ</h2>
+                            <ul>
+                                <li>Respecter la confidentialité des informations sensibles des joueurs et du staff</li>
+                                <li>Ne pas divulguer d'informations personnelles ou confidentielles sans autorisation</li>
+                            </ul>
+                        </div>
+
+                        <div class="reglement-box">
+                            <h2>4. COMMUNICATION</h2>
+                            <ul>
+                                <li>La communication résout les problèmes et aide les joueurs en besoin</li>
+                                <li>Ne JAMAIS communiquer in-game sur un report avec du langage familier - SANCTION SÉVÈRE / DEMOTE</li>
+                                <li>Utilisez Discord (vocal ou ticket) pour éviter le metagaming</li>
+                                <li>Zéro favoritisme envers vos amis - Règles identiques pour tout le monde</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="danger-box">
+                        <h3>⚠️ SANCTIONS</h3>
+                        <div class="sanctions-grid">
+                            <div class="sanction-item"><span class="sanction-label">Infraction mineure:</span> Avertissement verbal</div>
+                            <div class="sanction-item"><span class="sanction-label">Infractions répétées:</span> Mute / Kick</div>
+                            <div class="sanction-item"><span class="sanction-label">Infractions graves:</span> Ban temporaire (1-7j)</div>
+                            <div class="sanction-item"><span class="sanction-label">Infractions très graves:</span> Ban permanent</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- STAFF PAGE -->
+        <div id="staff" class="page">
+            <section class="section section-dark">
+                <div class="section-container">
+                    <div class="staff-header">
+                        <h1>HIÉRARCHIE STAFF</h1>
+                    </div>
+                    <p class="section-desc">Structure organisationnelle d'Union WL</p>
+
+                    <div id="staffContainer"></div>
+
+                    <div class="info-box">
+                        <h3>📌 STRUCTURE HIÉRARCHIQUE</h3>
+                        <p>Notre équipe est organisée en 7 catégories pour assurer une gestion efficace et professionnelle du serveur.</p>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-item-label">Fondateur</div>
+                                <div class="info-item-text">Chef du serveur</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Gérant discord</div>
+                                <div class="info-item-text">Gére le discord</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Responsable</div>
+                                <div class="info-item-text">Responsable du serveur</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Administrateur</div>
+                                <div class="info-item-text">Gére l'administration</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Modérateur</div>
+                                <div class="info-item-text">gére modération du serveur discord</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Modérateur Test</div>
+                                <div class="info-item-text">Modérateur en évalution</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Helper</div>
+                                <div class="info-item-text">s'occupe de l'Assistance des joueurs discord</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-item-label">Helper Test</div>
+                                <div class="info-item-text">Helper en Test pour rentrer dans le staff</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© Union WL — Documentation staff</p>
+        <p>Site Staff Officiel</p>
+    </footer>
+
+    <script>
+        // Données staff (statiques maintenant)
+        const staffData = {
+            direction: [
+                { pseudo: 'Nacros', discord: 'nacros0534', role: 'Fondateur', emoji: '👑' }
+            ],
+            leadership: [
+                { pseudo: 'Zipizz', discord: 'Zipizz', role: 'Responsable', emoji: '🎓' },
+                { pseudo: 'Zipizz', discord: 'Zipizz', role: 'Gérant Discord', emoji: '🔑' },
+                { pseudo: 'Nyrr', discord: 'Nyrr.officiel', role: 'Gérant Staff', emoji: '📅' }
+            ],
+            admin: [
+                { pseudo: 'Nyrr', discord: 'Nyrr.officiel', role: 'Administrateur', emoji: '🎈' },
+                { pseudo: 'Melo', discord: 'melo11.01', role: 'Administrateur', emoji: '🎈' },
+                { pseudo: 'astralrogue2822', discord: 'astralrogue2822', role: 'Administrateur', emoji: '🎈' },
+                { pseudo: 'bedou', discord: 'bedouuu', role: 'Administrateur', emoji: '🎈' }
+            ],
+            moderation: [
+                { pseudo: 'Alpha', discord: 'jason_1722_', role: 'Modérateur', emoji: '🔮' },
+                { pseudo: 'Frox', discord: 'f_ro_x', role: 'Modérateur', emoji: '🔮' },
+                { pseudo: 'Lobo', discord: 'md_201', role: 'Modérateur', emoji: '🔮' },
+                { pseudo: 'jixaya', discord: 'jixaya', role: 'Modérateur', emoji: '🔮' },
+                { pseudo: 'x3dve', discord: 'x3dve', role: 'Modérateur', emoji: '🔮' },
+                { pseudo: 'celim59s', discord: 'celim59s', role: 'Modérateur', emoji: '🔮' }
+            ],
+            'moderation-test': [
+                { pseudo: 'leyna_1722', discord: 'leyna_1722', role: 'Modérateur Test', emoji: '🔮' },
+                { pseudo: '72.hako', discord: '72.hako', role: 'Modérateur Test', emoji: '🔮' }
+            ],
+            support: [
+                { pseudo: 'thithisdesbois', discord: 'thithisdesbois', role: 'Helper', emoji: '🧩' },
+                { pseudo: 'minibinja', discord: 'minibinja', role: 'Helper', emoji: '🧩' }
+            ],
+            'support-test': [
+                { pseudo: 'astreea2.0', discord: 'astreea2.0', role: 'Helper Test', emoji: '🧩' },
+                { pseudo: 'aloys010', discord: 'aloys010', role: 'Helper Test', emoji: '🧩' },
+                { pseudo: 'isma_dela_isla', discord: 'isma_dela_isla', role: 'Helper Test', emoji: '🧩' },
+                { pseudo: 'k_071', discord: 'k_071', role: 'Helper Test', emoji: '🧩' }
+            ]
+        };
+
+        const categoryInfo = {
+            direction: { title: '👑 Fondateur', color: '#a855f7', class: 'direction' },
+            leadership: { title: '🎓 Responsable', color: '#d946ef', class: 'leadership' },
+            admin: { title: '🎈 ADMINISTRATION', color: '#a855f7', class: 'admin' },
+            moderation: { title: '🔮 MODÉRATION', color: '#06b6d4', class: 'moderation' },
+            'moderation-test': { title: '🔮 MODÉRATEUR TEST', color: '#06b6d4', class: 'moderation' },
+            support: { title: '🧩 HELPER', color: '#94a3b8', class: 'support' },
+            'support-test': { title: '🧩 HELPER TEST', color: '#94a3b8', class: 'support' }
+        };
+
+        function loadStaffData() {
+            const staffContainer = document.getElementById('staffContainer');
+            staffContainer.innerHTML = '';
+            let animationDelay = 0;
+
+            Object.keys(staffData).forEach(category => {
+                const categoryData = staffData[category];
+                const info = categoryInfo[category];
+
+                const categoryHTML = `
+                    <div class="category">
+                        <div class="category-header">
+                            <div class="category-line line-violet"></div>
+                            <h2 class="category-title" style="color: ${info.color};">${info.title}</h2>
+                            <div class="category-line line-violet-rev"></div>
+                        </div>
+                        <div class="staff-items" id="category-${category}"></div>
+                    </div>
+                `;
+
+                staffContainer.innerHTML += categoryHTML;
+                const categoryDiv = document.getElementById(`category-${category}`);
+
+                categoryData.forEach(member => {
+                    const cardHTML = `
+                        <div class="staff-card ${info.class}" style="animation-delay: ${animationDelay}s;">
+                            <div class="staff-card-content">
+                                <div class="staff-emoji">${member.emoji || '👤'}</div>
+                                <div>
+                                    <h3>${member.role}</h3>
+                                    <div class="staff-rank">${member.pseudo}</div>
+                                </div>
+                            </div>
+                            <div class="staff-card-right">Discord: ${member.discord}</div>
+                        </div>
+                    `;
+                    categoryDiv.innerHTML += cardHTML;
+                    animationDelay += 0.05;
+                });
+            });
+        }
+
+        // Navigation simple
+        function changePage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            const activeBtnText = {
+                'home': 'ACCUEIL',
+                'reglement': 'RÈGLEMENT STAFF',
+                'staff': 'ÉQUIPE'
+            }[pageId];
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.textContent === activeBtnText) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.getElementById('mobileMenu').classList.remove('show');
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('show');
+        }
+
+        // Chargement initial
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStaffData();
+        });
+    </script>
+</body>
+</html>
